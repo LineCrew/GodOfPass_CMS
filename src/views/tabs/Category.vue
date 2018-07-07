@@ -1,16 +1,16 @@
 <template>
-    
+  <div>
+  </div>
 </template>
 <script>
 export default {
   name: 'Category',
-  data () {
+  data() {
     return {
-      categories: null
-    }
-  }
-}
+      categories: null,
+    };
+  },
+};
 </script>
 <style lang="sass" scoped>
-
 </style>

@@ -4,11 +4,9 @@
 <script>
 export default {
   name: 'TabContainer',
-  created () {
-    
-  }
-}
+  created() {
+  },
+};
 </script>
 <style lang="sass" scoped>
-
 </style>

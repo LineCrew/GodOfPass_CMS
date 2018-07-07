@@ -34,7 +34,7 @@ export default {
       failtureText: '',
       error_message: null,
       snackbarTitle: '',
-      isSnackbarVisible: false
+      isSnackbarVisible: false,
     };
   },
 };

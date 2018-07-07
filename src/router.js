@@ -1,13 +1,13 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Login from './views/Login.vue';
-import TabContainer from './views/TabContainer';
-import Members from './views/tabs/Members';
-import Statistics from './views/tabs/Statistics';
-import Category from './views/tabs/Category';
-import CS from './views/tabs/Customer-Service';
-import Etc from './views/tabs/Etc';
-import Push from './views/tabs/Push';
+import TabContainer from './views/TabContainer.vue';
+import Members from './views/tabs/Members.vue';
+import Statistics from './views/tabs/Statistics.vue';
+import Category from './views/tabs/Category.vue';
+import CS from './views/tabs/Customer-Service.vue';
+import Etc from './views/tabs/Etc.vue';
+import Push from './views/tabs/Push.vue';
 
 Vue.use(Router);
 
@@ -27,34 +27,34 @@ export default new Router({
         {
           path: 'member',
           name: 'member',
-          component: Members
+          component: Members,
         },
         {
           path: 'statistics',
           name: 'statistics',
-          component: Statistics
+          component: Statistics,
         },
         {
           path: 'category',
           name: 'category',
-          component: Category
+          component: Category,
         },
         {
           path: 'push',
           name: 'push',
-          component: Push
+          component: Push,
         },
         {
           path: 'customer-service',
           name: 'cs',
-          component: CS
+          component: CS,
         },
         {
           path: 'etc',
           name: 'etc',
-          component: Etc
-        }
-      ]
-    }
+          component: Etc,
+        },
+      ],
+    },
   ],
 });

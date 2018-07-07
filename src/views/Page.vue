@@ -11,42 +11,42 @@ export default {
   name: 'page',
   components: {
     Header: require('./common/Header').default,
-    Menubar
+    Menubar,
   },
   methods: {
-    addClick () {
+    addClick() {
       this.$router.push('/pages/member')
     }
   },
-  mounted () {
+  mounted() {
     if (window.sessionStorage.getItem('session') !== 'valid' || !window.sessionStorage.getItem('branch_id')) {
-      console.log('no auth info')
+      console.log('no auth info');
       this.$refs.noAuthModal.openSimplert({
         message: '로그인 정보가 없습니다.',
         disableOverlayClick: true,
         customCloseBtnText: '돌아가기',
         customCloseBtnClass: 'btn btn-primary',
-        onClose: () => {
+        onClose: _ => {
           this.$router.replace('/')
-        }
-      })
+        },
+      });
     }
-    this.$store.commit('setBranchId', window.sessionStorage.getItem('branch_id'))
-    this.$store.commit('setBranchName', window.sessionStorage.getItem('branch_name'))
+    this.$store.commit('setBranchId', window.sessionStorage.getItem('branch_id'));
+    this.$store.commit('setBranchName', window.sessionStorage.getItem('branch_name'));
   },
   computed: {
-    fabAction () {
+    fabAction() {
       return this.$store.state.fabAction
     },
-    addAction () {
+    addAction() {
       return this.$store.state.addActionCallback
     },
-    editAction () {
+    editAction() {
       return this.$store.state.editActionCallback
     },
-    deleteAction () {
+    deleteAction() {
       return this.$store.state.deleteActionCallback
-    }
+    },
   }
 }
 </script>
