@@ -1,0 +1,9 @@
+.page-header-text {
+    color: lightgray;
+}
+.page-header-text:hover {
+    text-decoration: none;
+}
+.m-header__bottom {
+    height: auto !important;
+}
