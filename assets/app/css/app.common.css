@@ -7,3 +7,11 @@
 .m-header__bottom {
     height: auto !important;
 }
+body {
+    background-image: url(../../../assets/app/media/img/bg/bg-7.jpg)
+}
+
+#app {
+    height: 100%;
+    display: flex;
+}
