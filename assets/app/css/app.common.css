@@ -15,3 +15,16 @@ body {
     height: 100%;
     display: flex;
 }
+.filter-box > table > tbody > tr > td {
+    vertical-align: middle;
+}
+.filter-box > table > tbody > tr > td > .m-checkbox {
+    margin-bottom: 0;
+}
+
+.custom-file-label::after {
+    content: '파일 선택';
+}
+.swal2-popup #swal2-content {
+    text-align: left;
+}

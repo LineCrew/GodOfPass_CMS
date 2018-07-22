@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8" />
     
-    <title>합격의 신 관리 콘솔</title>
+    <title>합격의 신 | 종목 관리</title>
     <meta name="description" content="Latest updates and statistic charts">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
     
@@ -271,8 +271,8 @@
                             
                             <div id="m_header_menu" class="m-header-menu m-aside-header-menu-mobile m-aside-header-menu-mobile--offcanvas  m-header-menu--skin-dark m-header-menu--submenu-skin-light m-aside-header-menu-mobile--skin-light m-aside-header-menu-mobile--submenu-skin-light ">
                                 <ul class="m-menu__nav  m-menu__nav--submenu-arrow ">
-                                    <li class="m-menu__item  m-menu__item--active  m-menu__item--active-tab  m-menu__item--submenu m-menu__item--tabs" m-menu-submenu-toggle="tab" aria-haspopup="true"><a href="index.html" class="m-menu__link m-menu__toggle"><span class="m-menu__link-text">회원 관리</span><i class="m-menu__hor-arrow la la-angle-down"></i><i class="m-menu__ver-arrow la la-angle-right"></i></a></li>
-                                    <li class="m-menu__item  m-menu__item--submenu m-menu__item--tabs" m-menu-submenu-toggle="tab" aria-haspopup="true"><a href="questionaire.html" class="m-menu__link m-menu__toggle"><span class="m-menu__link-text">종목 관리</span><i class="m-menu__hor-arrow la la-angle-down"></i><i class="m-menu__ver-arrow la la-angle-right"></i></a></li>
+                                    <li class="m-menu__item  m-menu__item--submenu m-menu__item--tabs" m-menu-submenu-toggle="tab" aria-haspopup="true"><a href="index.html" class="m-menu__link m-menu__toggle"><span class="m-menu__link-text">회원 관리</span><i class="m-menu__hor-arrow la la-angle-down"></i><i class="m-menu__ver-arrow la la-angle-right"></i></a></li>
+                                    <li class="m-menu__item  m-menu__item--active  m-menu__item--active-tab  m-menu__item--submenu m-menu__item--tabs" m-menu-submenu-toggle="tab" aria-haspopup="true"><a href="questionaire.html" class="m-menu__link m-menu__toggle"><span class="m-menu__link-text">종목 관리</span><i class="m-menu__hor-arrow la la-angle-down"></i><i class="m-menu__ver-arrow la la-angle-right"></i></a></li>
                                     <li class="m-menu__item  m-menu__item--submenu m-menu__item--tabs" m-menu-submenu-toggle="tab" aria-haspopup="true"><a href="statistics.html" class="m-menu__link m-menu__toggle"><span class="m-menu__link-text">통계 관리</span><i class="m-menu__hor-arrow la la-angle-down"></i><i class="m-menu__ver-arrow la la-angle-right"></i></a></li>
                                     <li class="m-menu__item  m-menu__item--submenu m-menu__item--tabs" m-menu-submenu-toggle="tab" aria-haspopup="true"><a href="sales.html" class="m-menu__link m-menu__toggle"><span class="m-menu__link-text">매출 관리</span><i class="m-menu__hor-arrow la la-angle-down"></i><i class="m-menu__ver-arrow la la-angle-right"></i></a></li>
                                     <li class="m-menu__item  m-menu__item--submenu m-menu__item--tabs" m-menu-submenu-toggle="tab" aria-haspopup="true"><a href="customer_service.html" class="m-menu__link m-menu__toggle"><span class="m-menu__link-text">고객 지원</span><i class="m-menu__hor-arrow la la-angle-down"></i><i class="m-menu__ver-arrow la la-angle-right"></i></a></li>
@@ -297,7 +297,10 @@
                 <div class="m-subheader ">
                     <div class="d-flex align-items-center">
                         <div class="mr-auto">
-                            <h3 class="m-subheader__title ">회원 관리</h3>
+                            <h3 class="m-subheader__title ">종목 관리</h3>
+                        </div>
+                        <div>
+                            <button class="btn m-btn m-btn--pill m-btn--air btn-brand m-btn--custom" @click="uploadQuestionClick()">문제 업로드</button>
                         </div>
                     </div>
                 </div>
@@ -308,42 +311,124 @@
                             <table class="table">
                                 <tbody>
                                     <tr>
-                                        <td>조회 기간</td>
+                                        <td>종목 구분</td>
                                         <td>
+                                            <span>대분류</span>
                                             <select class="w-auto d-inline-block form-control m-input m-input--air">
-                                                <option selected>기간 선택</option>
-                                                <option>달력 선택</option>
-                                                <option>전체</option>
-                                                <option>현재</option>
-                                                <option>오늘</option>
-                                                <option>어제</option>
-                                                <option>이번 주</option>
-                                                <option>저번 주</option>
-                                                <option>이번 달</option>
-                                                <option>저번 달</option>
-                                            </select>
-                                            <input class="w-auto d-inline-block form-control m-input m-input--air" type="date" />
-                                            <input class="w-auto d-inline-block form-control m-input m-input--air" type="date" />    
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>조회 내용</td>
-                                        <td>
-                                            <label class="m-checkbox m-checkbox--state-brand"><input type="checkbox">전체<span></span></label>&nbsp;&nbsp;&nbsp;
-                                            <label class="m-checkbox m-checkbox--state-brand"><input type="checkbox">신규가입<span></span></label>&nbsp;&nbsp;&nbsp;
-                                            <label class="m-checkbox m-checkbox--state-brand"><input type="checkbox">탈퇴<span></span></label>&nbsp;&nbsp;&nbsp;&nbsp;
-                                            <label class="m-checkbox m-checkbox--state-brand"><input type="checkbox">접속<span></span></label>&nbsp;&nbsp;&nbsp;&nbsp;
-                                            <label class="m-checkbox m-checkbox--state-brand"><input type="checkbox">비접속<span></span></label>&nbsp;&nbsp;&nbsp;
-                                            <label class="m-checkbox m-checkbox--state-brand"><input type="checkbox">질문이력<span></span></label>&nbsp;&nbsp;&nbsp;
-                                            <label class="m-checkbox m-checkbox--state-brand"><input type="checkbox">오류신고<span></span></label>&nbsp;
-                                            <input class="w-auto d-inline-block form-control m-input m-input--air" type="search" placeholder="조회내용">
-                                            <button class="btn m-btn m-btn--brand">검색</button>
+                                                <option selected>대분류 선택</option>
+                                                <option>종목 추가</option>
+                                                <option>공무원의 신</option>
+                                                <option>자격증의 신</option>
+                                            </select>&nbsp;&nbsp;&nbsp;
+                                            <span>중분류</span>
+                                            <select class="w-auto d-inline-block form-control m-input m-input--air">
+                                                <option selected>중분류 선택</option>
+                                                <option>7급</option>
+                                                <option>9급</option>
+                                            </select>&nbsp;&nbsp;&nbsp;
+                                            <span>소분류</span>
+                                            <select class="w-auto d-inline-block form-control m-input m-input--air">
+                                                <option selected>소분류 선택</option>
+                                                <option>소분류 추가</option>
+                                                <option>국어</option>
+                                                <option>영어</option>
+                                                <option>한국사</option>
+                                                <option>헌법</option>
+                                                <option>행정법</option>
+                                                <option>행정학</option>
+                                                <option>경제학</option>
+                                                <option>교육학</option>
+                                                <option>회계학</option>
+                                                <option>세법개론</option>
+                                            </select>&nbsp;&nbsp;&nbsp;
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-5">
+                            <h6>중분류</h6>
+                            <table class="table m-table m-table--head-separator-danger table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>대분류</th>
+                                        <th>이름</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td rowspan="2">공무원</td>
+                                        <td>7급</td>
+                                    </tr>        
+                                    <tr>
+                                        <td>9급</td>
+                                    </tr>
+                                    <tr>
+                                        <td rowspan="5">자격증</td>
+                                        <td>기능사</td>
+                                    </tr>
+                                    <tr>
+                                        <td>산업기사</td>
+                                    </tr>
+                                    <tr>
+                                        <td>기사</td>
+                                    </tr>
+                                    <tr>
+                                        <td>전문자격</td>
+                                    </tr>
+                                    <tr>
+                                        <td>서비스</td>
+                                    </tr>
+                                </tbody>
+                            </table>    
+                        </div>
+                        <div class="col-7">
+                            <h6>소분류</h6>
+                            <table class="table m-table m-table--head-separator-danger table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>과목코드</th>
+                                        <th>이름</th>
+                                        <th>문제 수</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>101</td>
+                                        <td>국어</td>
+                                        <td>20개</td>
+                                    </tr>
+                                    <tr>
+                                        <td>101</td>
+                                        <td>영어</td>
+                                        <td>20개</td>
+                                    </tr>
+                                    <tr>
+                                        <td>101</td>
+                                        <td>한국사</td>
+                                        <td>20개</td>
+                                    </tr>
+                                    <tr>
+                                        <td>101</td>
+                                        <td>행정학개론</td>
+                                        <td>20개</td>
+                                    </tr>
+                                    <tr>
+                                        <td>101</td>
+                                        <td>행정법총론</td>
+                                        <td>20개</td>
+                                    </tr>
+                                    <tr>
+                                        <td>101</td>
+                                        <td>교육학개론</td>
+                                        <td>20개</td>
+                                    </tr>
+                                </tbody>
+                            </table>        
+                        </div>
+                    </div>    
                     <div class="row">
                         <div class="col-12">
                             <table class="table m-table m-table--head-separator-danger table-bordered table-hover">
@@ -360,18 +445,10 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-if="memberData instanceof Array && memberData.length === 0">
-                                        <td @click="memberClick(0)" class="m--align-center" colspan="8">표시할 회원 정보가 없습니다.</td>
+                                    <tr>
+                                        <td colspan="8">표시할 회원 정보가 없습니다.</td>
                                     </tr>
-                                    <tr v-for="(member, idx) in memberData">
-                                        <td>{{ idx + 1 }}</td>
-                                        <td>{{ member.name }}</td>
-                                        <td>{{ member.name }}</td>
-                                        <td>{{ member.email }}</td>
-                                        <td>{{ member.name }}</td>
-                                        <td>{{ member.name }}</td>
-                                        <td>{{ member.name }}</td>
-                                        <td>{{ member.name }}</td>
+                                    <tr>
                                     </tr>
                                 </tbody>
                             </table>
@@ -406,9 +483,6 @@
         <i class="la la-arrow-up"></i>
     </div>
     <!-- end::Scroll Top -->
-    
-    <user-detail-modal v-if="selectedRow !== -1" :user-id="'1' || memberData[selectedRow].id"></user-detail-modal>
-    
 </div>
 
 <!--begin::Base Scripts -->
@@ -428,8 +502,9 @@
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <!-- end::Vue.js script -->
 
-<script src="assets/app/js/dashboard.member.js"></script>
 <script src="assets/app/js/dashboard.common.js"></script>
+<script src="assets/app/js/dashboard.questionaire.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.13.2/xlsx.full.min.js"></script>
 
 <!-- begin::Page Loader -->
 <script>

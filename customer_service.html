@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8" />
     
-    <title>합격의 신 관리 콘솔</title>
+    <title>합격의 신 | 고객 지원</title>
     <meta name="description" content="Latest updates and statistic charts">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
     
@@ -271,11 +271,18 @@
                             
                             <div id="m_header_menu" class="m-header-menu m-aside-header-menu-mobile m-aside-header-menu-mobile--offcanvas  m-header-menu--skin-dark m-header-menu--submenu-skin-light m-aside-header-menu-mobile--skin-light m-aside-header-menu-mobile--submenu-skin-light ">
                                 <ul class="m-menu__nav  m-menu__nav--submenu-arrow ">
-                                    <li class="m-menu__item  m-menu__item--active  m-menu__item--active-tab  m-menu__item--submenu m-menu__item--tabs" m-menu-submenu-toggle="tab" aria-haspopup="true"><a href="index.html" class="m-menu__link m-menu__toggle"><span class="m-menu__link-text">회원 관리</span><i class="m-menu__hor-arrow la la-angle-down"></i><i class="m-menu__ver-arrow la la-angle-right"></i></a></li>
+                                    <li class="m-menu__item  m-menu__item--submenu m-menu__item--tabs" m-menu-submenu-toggle="tab" aria-haspopup="true"><a href="index.html" class="m-menu__link m-menu__toggle"><span class="m-menu__link-text">회원 관리</span><i class="m-menu__hor-arrow la la-angle-down"></i><i class="m-menu__ver-arrow la la-angle-right"></i></a></li>
                                     <li class="m-menu__item  m-menu__item--submenu m-menu__item--tabs" m-menu-submenu-toggle="tab" aria-haspopup="true"><a href="questionaire.html" class="m-menu__link m-menu__toggle"><span class="m-menu__link-text">종목 관리</span><i class="m-menu__hor-arrow la la-angle-down"></i><i class="m-menu__ver-arrow la la-angle-right"></i></a></li>
                                     <li class="m-menu__item  m-menu__item--submenu m-menu__item--tabs" m-menu-submenu-toggle="tab" aria-haspopup="true"><a href="statistics.html" class="m-menu__link m-menu__toggle"><span class="m-menu__link-text">통계 관리</span><i class="m-menu__hor-arrow la la-angle-down"></i><i class="m-menu__ver-arrow la la-angle-right"></i></a></li>
-                                    <li class="m-menu__item  m-menu__item--submenu m-menu__item--tabs" m-menu-submenu-toggle="tab" aria-haspopup="true"><a href="sales.html" class="m-menu__link m-menu__toggle"><span class="m-menu__link-text">매출 관리</span><i class="m-menu__hor-arrow la la-angle-down"></i><i class="m-menu__ver-arrow la la-angle-right"></i></a></li>
-                                    <li class="m-menu__item  m-menu__item--submenu m-menu__item--tabs" m-menu-submenu-toggle="tab" aria-haspopup="true"><a href="customer_service.html" class="m-menu__link m-menu__toggle"><span class="m-menu__link-text">고객 지원</span><i class="m-menu__hor-arrow la la-angle-down"></i><i class="m-menu__ver-arrow la la-angle-right"></i></a></li>
+                                    <li class="m-menu__item  m-menu__item--submenu m-menu__item--tabs" m-menu-submenu-toggle="tab" aria-haspopup="true"><a href="customer_service.html" class="m-menu__link m-menu__toggle"><span class="m-menu__link-text">매출 관리</span><i class="m-menu__hor-arrow la la-angle-down"></i><i class="m-menu__ver-arrow la la-angle-right"></i></a></li>
+                                    <li class="m-menu__item  m-menu__item--active  m-menu__item--active-tab  m-menu__item--submenu m-menu__item--tabs" m-menu-submenu-toggle="tab" aria-haspopup="true"><a href="javascript:;" class="m-menu__link m-menu__toggle"><span class="m-menu__link-text">고객 지원</span><i class="m-menu__hor-arrow la la-angle-down"></i><i class="m-menu__ver-arrow la la-angle-right"></i></a>
+                                        <div class="m-menu__submenu m-menu__submenu--classic m-menu__submenu--left m-menu__submenu--tabs"><span class="m-menu__arrow m-menu__arrow--adjust"></span>
+                                            <ul class="m-menu__subnav">
+                                                <li class="m-menu__item "  m-menu-link-redirect="1" aria-haspopup="true"><a  href="builder.html" class="m-menu__link "><i class="m-menu__link-icon flaticon-graphic-2"></i><span class="m-menu__link-text">답변 작성</span></a></li>
+                                                <li class="m-menu__item "  m-menu-link-redirect="1" aria-haspopup="true"><a  href="builder.html" class="m-menu__link "><i class="m-menu__link-icon flaticon-analytics"></i><span class="m-menu__link-text">자주하는 질문</span></a></li>
+                                            </ul>
+                                        </div>
+                                    </li>
                                     <li class="m-menu__item  m-menu__item--submenu m-menu__item--tabs" m-menu-submenu-toggle="tab" aria-haspopup="true"><a href="etc.html" class="m-menu__link m-menu__toggle"><span class="m-menu__link-text">기타 관리</span><i class="m-menu__hor-arrow la la-angle-down"></i><i class="m-menu__ver-arrow la la-angle-right"></i></a></li>
                                 </ul>
                             </div>
@@ -297,81 +304,113 @@
                 <div class="m-subheader ">
                     <div class="d-flex align-items-center">
                         <div class="mr-auto">
-                            <h3 class="m-subheader__title ">회원 관리</h3>
+                            <h3 class="m-subheader__title ">고객 지원</h3>
+                        </div>
+                        <div>
+                            <span class="m-subheader__daterange" id="m_dashboard_daterangepicker">
+                                <span class="m-subheader__daterange-label">
+                                    <span class="m-subheader__daterange-title"></span>
+                                    <span class="m-subheader__daterange-date m--font-brand"></span>
+                                </span>
+                                <a href="#" class="btn btn-sm btn-brand m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill">
+                                    <i class="la la-angle-down"></i>
+                                </a>
+                            </span>
                         </div>
                     </div>
                 </div>
                 <!-- END: Subheader -->
                 <div class="m-content">
                     <div class="row">
-                        <div class="col-12 filter-box">
-                            <table class="table">
-                                <tbody>
-                                    <tr>
-                                        <td>조회 기간</td>
-                                        <td>
-                                            <select class="w-auto d-inline-block form-control m-input m-input--air">
-                                                <option selected>기간 선택</option>
-                                                <option>달력 선택</option>
-                                                <option>전체</option>
-                                                <option>현재</option>
-                                                <option>오늘</option>
-                                                <option>어제</option>
-                                                <option>이번 주</option>
-                                                <option>저번 주</option>
-                                                <option>이번 달</option>
-                                                <option>저번 달</option>
-                                            </select>
-                                            <input class="w-auto d-inline-block form-control m-input m-input--air" type="date" />
-                                            <input class="w-auto d-inline-block form-control m-input m-input--air" type="date" />    
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>조회 내용</td>
-                                        <td>
-                                            <label class="m-checkbox m-checkbox--state-brand"><input type="checkbox">전체<span></span></label>&nbsp;&nbsp;&nbsp;
-                                            <label class="m-checkbox m-checkbox--state-brand"><input type="checkbox">신규가입<span></span></label>&nbsp;&nbsp;&nbsp;
-                                            <label class="m-checkbox m-checkbox--state-brand"><input type="checkbox">탈퇴<span></span></label>&nbsp;&nbsp;&nbsp;&nbsp;
-                                            <label class="m-checkbox m-checkbox--state-brand"><input type="checkbox">접속<span></span></label>&nbsp;&nbsp;&nbsp;&nbsp;
-                                            <label class="m-checkbox m-checkbox--state-brand"><input type="checkbox">비접속<span></span></label>&nbsp;&nbsp;&nbsp;
-                                            <label class="m-checkbox m-checkbox--state-brand"><input type="checkbox">질문이력<span></span></label>&nbsp;&nbsp;&nbsp;
-                                            <label class="m-checkbox m-checkbox--state-brand"><input type="checkbox">오류신고<span></span></label>&nbsp;
-                                            <input class="w-auto d-inline-block form-control m-input m-input--air" type="search" placeholder="조회내용">
-                                            <button class="btn m-btn m-btn--brand">검색</button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="row">
                         <div class="col-12">
                             <table class="table m-table m-table--head-separator-danger table-bordered table-hover">
                                 <thead>
                                     <tr>
-                                        <th>#</th>
-                                        <th>순서</th>
-                                        <th>이름</th>
-                                        <th>별명</th>
-                                        <th>이메일</th>
-                                        <th>전화번호</th>
-                                        <th>가입일</th>
-                                        <th>마지막 접속 일자</th>
+                                        <th>주제</th>
+                                        <th>자주하는 질문</th>
+                                        <th>답변</th>
+                                        <th>동작</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-if="memberData instanceof Array && memberData.length === 0">
-                                        <td @click="memberClick(0)" class="m--align-center" colspan="8">표시할 회원 정보가 없습니다.</td>
+                                    <tr>
+                                        <td rowspan="5">오류 장애 관련 FAQ</td>
                                     </tr>
-                                    <tr v-for="(member, idx) in memberData">
-                                        <td>{{ idx + 1 }}</td>
-                                        <td>{{ member.name }}</td>
-                                        <td>{{ member.name }}</td>
-                                        <td>{{ member.email }}</td>
-                                        <td>{{ member.name }}</td>
-                                        <td>{{ member.name }}</td>
-                                        <td>{{ member.name }}</td>
-                                        <td>{{ member.name }}</td>
+                                    <tr>
+                                        <td>1. 주제에 관련된 세부 질문 내용</td>
+                                        <td>1. 주제에 관련된 답변</td>
+                                        <td>
+                                            <button class="btn btn-primary m-btn m-btn--air m-btn--custom">편집</button>
+                                            <button class="btn btn-danger m-btn m-btn--air m-btn--custom">삭제</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>2. 두번째 내용</td>
+                                        <td>답변</td>
+                                        <td>
+                                            <button class="btn btn-primary m-btn m-btn--air m-btn--custom">편집</button>
+                                            <button class="btn btn-danger m-btn m-btn--air m-btn--custom">삭제</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>3. 세번째 내용</td>
+                                        <td>답변</td>
+                                        <td>
+                                            <button class="btn btn-primary m-btn m-btn--air m-btn--custom">편집</button>
+                                            <button class="btn btn-danger m-btn m-btn--air m-btn--custom">삭제</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td>
+                                            <button class="btn btn-success m-btn m-btn--air m-btn--custom">추가</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td rowspan="4">충전 및 결제 오류 관련 FAQ</td>
+                                    </tr>
+                                    <tr>
+                                        <td>1. 내용</td>
+                                        <td>답변</td>
+                                        <td>
+                                            <button class="btn btn-primary m-btn m-btn--air m-btn--custom">편집</button>
+                                            <button class="btn btn-danger m-btn m-btn--air m-btn--custom">삭제</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>2. 내용</td>
+                                        <td>답변</td>
+                                        <td>
+                                            <button class="btn btn-primary m-btn m-btn--air m-btn--custom">편집</button>
+                                            <button class="btn btn-danger m-btn m-btn--air m-btn--custom">삭제</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td>
+                                            <button class="btn btn-success m-btn m-btn--air m-btn--custom">추가</button>
+                                        </td>
+                                    </tr>    
+                                    <tr>
+                                        <td><button class="btn btn-success m-btn m-btn--air m-btn--custom">주제 추가</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>            
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <table class="table m-table m-table--head-separator-danger table-bordered table-hover">
+                                <tbody>
+                                    <tr>
+                                        <td>주제</td>
+                                        <td><input class="form-control m-input m-input--air" type="text" placeholder="주제를 입력하세요"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>주제</td>
+                                        <td><input class="form-control m-input m-input--air" type="text" placeholder="주제를 입력하세요"></td>
                                     </tr>
                                 </tbody>
                             </table>
