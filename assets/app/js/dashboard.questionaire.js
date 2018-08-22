@@ -3,18 +3,11 @@ var questionaireDT = null
 var questionItemDT = null
 var app = null
 
-function normalizeNumber(number) {
+function normalizeNumber(number, length) {
     number = number.toString()
-    switch (number.length) {
-        case 1:
-            number = '000' + number
-            break
-        case 2:
-            number = '00' + number
-            break
-        case 3:
-            number = '0' + number
-            break
+    const count = length - number.length
+    for (let i = count; i > 0; i--) {
+        number = '0' + number
     }
     return number
 }
@@ -87,7 +80,7 @@ $(document).ready(function () {
                     var content = parsedSheet[`A${row}`]
                     if (content) {
                         result.push({
-                            number: content.v + normalizeNumber(parsedSheet[`B${row}`].v) + normalizeNumber(parsedSheet[`C${row}`].v),
+                            number: content.v + normalizeNumber(parsedSheet[`B${row}`].v, 6) + normalizeNumber(parsedSheet[`C${row}`].v, 4),
                             question: (parsedSheet[`D${row}`].h).trim(),
                             example: parsedSheet[`E${row}`] ? parsedSheet[`E${row}`].f + '' || parsedSheet[`E${row}`].v + '' : '',
                             case_1: (parsedSheet[`F${row}`].v + '' || '').trim(),
