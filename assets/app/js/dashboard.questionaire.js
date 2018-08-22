@@ -3,6 +3,22 @@ var questionaireDT = null
 var questionItemDT = null
 var app = null
 
+function normalizeNumber(number) {
+    number = number.toString()
+    switch (number.length) {
+        case 1:
+            number = '000' + number
+            break
+        case 2:
+            number = '00' + number
+            break
+        case 3:
+            number = '0' + number
+            break
+    }
+    return number
+}
+
 $(document).ready(function () {
     app = new Vue({
         el: '#app',
@@ -22,6 +38,9 @@ $(document).ready(function () {
         },
         methods: {
             uploadQuestionClick () {
+                if (this.selectedFilter_questionaire < 1) {
+                    return
+                }
                 this.showUploadModal = true
                 swal({
                     target: document.getElementById('app'),
@@ -32,10 +51,11 @@ $(document).ready(function () {
                     showCancelButton: true,
                     width: '40rem'
                 })
-                $('#selected_excel_file').change(function(event) {
+                $('#selected_excel_file').change(event => {
                     console.log('file selected')
                     try {
-                        var rABS = true; // true: readAsBinaryString ; false: readAsArrayBuffer
+                        // true: readAsBinaryString ; false: readAsArrayBuffer
+                        var rABS = true;
                         var files = event.target.files, f = files[0];
                         this.selectedFileName = f.name
                         $('.custom-file-label').text(f.name)
@@ -48,40 +68,63 @@ $(document).ready(function () {
                             app.parseExcelQuestionaireFile(workbook)
                         }
 
-                        if(rABS) fileReader.readAsBinaryString(f); else fileReader.readAsArrayBuffer(f);
+                        if (rABS) fileReader.readAsBinaryString(f); else fileReader.readAsArrayBuffer(f);
                     } catch (e) {
                         console.error('cannot parse file.', e)
                     }
                 })
             },
             parseExcelQuestionaireFile (workbook) {
-                console.log(workbook)
+                // console.log(workbook)
                 var parsedSheet = workbook.Sheets[workbook.SheetNames[0]]
-                console.log('parsed sheet', parsedSheet)
-                var row = 2
-                var result = []
-                while(true) {
+                // console.log('parsed sheet', parsedSheet)
+                let row = 2
+                let result = []
+                //  questionaire case count: 4 = default, 5 = determine
+                let case_count = parsedSheet[`K${row}`] ? 5 : 4
+
+                while (true) {
                     var content = parsedSheet[`A${row}`]
                     if (content) {
                         result.push({
-                            subject: content.v,
-                            episode: parsedSheet[`B${row}`].v,
-                            number: parsedSheet[`C${row}`].v,
-                            question: parsedSheet[`D${row}`].v,
+                            number: content.v + normalizeNumber(parsedSheet[`B${row}`].v) + normalizeNumber(parsedSheet[`C${row}`].v),
+                            question: (parsedSheet[`D${row}`].h).trim(),
                             example: parsedSheet[`E${row}`] ? parsedSheet[`E${row}`].f || parsedSheet[`E${row}`].v : '',
-                            case_1: parsedSheet[`F${row}`].v,
-                            case_2: parsedSheet[`G${row}`].v,
-                            case_3: parsedSheet[`H${row}`].v,
-                            case_4: parsedSheet[`I${row}`].v,
-                            answer: parsedSheet[`J${row}`].v,
+                            case_1: (parsedSheet[`F${row}`].v || '').trim(),
+                            case_2: (parsedSheet[`G${row}`].v || '').trim(),
+                            case_3: (parsedSheet[`H${row}`].v || '').trim(),
+                            case_4: (parsedSheet[`I${row}`].v || '').trim(),
+                            case_5: case_count === 5 ? parsedSheet[`J${row}`].v || '' : '',
+                            answer: case_count === 4 ? parsedSheet[`J${row}`].v || '' : parsedSheet[`K${row}`].v || '',
                         })
-                        console.log('formatted text: ', parsedSheet[`E${row}`] ? parsedSheet[`E${row}`].h : '')
+                        // console.log('formatted text: ', parsedSheet[`E${row}`] ? parsedSheet[`E${row}`].h : '')
                         row++
                     } else {
                         break
                     }
                 }
-                console.log(result)
+                result.forEach(item => {
+                    this.uploadQuestionItem(item)
+                })
+            },
+            async uploadQuestionItem (item) {
+                item.number = Number.parseInt(item.number)
+                $.ajax({
+                    method: 'POST',
+                    url: API_V1 + '/questionaire/' + this.selectedFilter_questionaire + '/addQuestionItem',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                    dataType: 'json',
+                    data: JSON.stringify(item),
+                    success: res => {
+                        console.log('upload succeeded: ' + item.number)                        
+                    },
+                    error: (xhr, errStatus, error) => {
+                        console.log('upload failed: ', item.number)
+                    }
+                })
             },
             createTopic () {
                 console.log('Click: create topic', this.topicName)
@@ -95,13 +138,12 @@ $(document).ready(function () {
                         },
                         dataType: 'json',
                         data: JSON.stringify({
-                            gameId: selectedFilter_game,
+                            gameId: this.selectedFilter_game,
                             topicName: this.topicName
                         }),
                         success: res => {
                             this.topicName = ''
                             topicDT.reload()
-                            this.loadData()
                         },
                         error: (xhr, errStatus, error) => {
 
@@ -111,7 +153,7 @@ $(document).ready(function () {
             },
             createQuestionaire () {
                 console.log('Click: create questionaire', this.questionaireName)
-                if (this.questionaireName && this.selectedTopic > 0) {
+                if (this.questionaireName && this.selectedFilter_topic > 0) {
                     $.ajax({
                         method: 'POST',
                         url: API_V1 + '/questionaire/create',
@@ -121,14 +163,13 @@ $(document).ready(function () {
                         },
                         dataType: 'json',
                         data: JSON.stringify({
-                            topicId: Number.parseInt(this.selectedTopic),
+                            topicId: Number.parseInt(this.selectedFilter_topic),
                             questionaireName: this.questionaireName
                         }),
                         success: res => {
                             this.questionaireName = ''
                             this.selectedTopic = -1
                             questionaireDT.reload()
-                            this.loadData()
                         },
                         error: (xhr, errStatus, error) => {
 
@@ -247,6 +288,42 @@ $(document).ready(function () {
                         {
                             field: 'id',
                             title: '#',
+                        },
+                        {
+                            field: 'number',
+                            title: 'number'
+                        },
+                        {
+                            field: 'content',
+                            title: 'question'
+                        },
+                        {
+                            field: 'example',
+                            title: 'example'
+                        },
+                        {
+                            field: 'case_1',
+                            title: 'case 1'
+                        },
+                        {
+                            field: 'case_2',
+                            title: 'case 2'
+                        },
+                        {
+                            field: 'case_3',
+                            title: 'case 3'
+                        },
+                        {
+                            field: 'case_4',
+                            title: 'case 4'
+                        },
+                        {
+                            field: 'case_5',
+                            title: 'case 5'
+                        },
+                        {
+                            field: 'answer',
+                            title: 'answer'
                         }
                     ]
                 })
@@ -271,6 +348,15 @@ $(document).ready(function () {
             this.initTopicDataTable()
             this.initQuestionaireTable()
             this.initQuestionItemTable()
+        },
+        watch: {
+            selectedFilter_game (newGame) {
+                if (newGame == -1) {
+
+                } else {
+                    
+                }
+            }
         }
     });
 })

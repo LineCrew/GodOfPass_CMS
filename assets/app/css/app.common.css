@@ -35,3 +35,11 @@ body {
 select.form-control:not([size]):not([multiple]) {
     height: calc(2.95rem + 5px)
 }
+@media (min-width: 1025px) {
+    .m-header--fixed.m-header--minimize-on .m-header .m-header__top {
+        background: rgba(255,255,255,.5);
+    }
+    .m-header--fixed.m-header--minimize-on .m-header .m-header__top .m--font-light {
+        color: #333 !important;
+    }
+}

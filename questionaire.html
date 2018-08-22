@@ -318,12 +318,12 @@
                                             <span>중분류</span>
                                             <select class="w-auto d-inline-block form-control m-input m-input--air" v-model="selectedFilter_topic">
                                                 <option selected value="-1">중분류 선택</option>
-                                                <option v-for="topic in topicData" :value="topic.id">{{ gameData.filter(game => game.id == topic.game_id)[0].gameName + ' - ' + topic.topicName }}</option>
+                                                <option v-for="topic in topicData" :value="topic.id">{{ (gameData.length > 0 ? gameData.filter(game => game.id == topic.game_id)[0].gameName : '') + ' - ' + topic.topicName }}</option>
                                             </select>&nbsp;&nbsp;&nbsp;
                                             <span>소분류</span>
                                             <select class="w-auto d-inline-block form-control m-input m-input--air" v-model="selectedFilter_questionaire">
                                                 <option selected value="-1">소분류 선택</option>
-                                                <option v-for="questionaire in questionaireData" :value="questionaire.id">{{ topicData.filter(topic => topic.id == questionaire.topic_id)[0].topicName +  ' - ' + questionaire.questionaireName }}</option>
+                                                <option v-for="questionaire in questionaireData" :value="questionaire.id">{{ (topicData.length > 0 ? topicData.filter(topic => topic.id == questionaire.topic_id)[0].topicName : '') +  ' - ' + questionaire.questionaireName }}</option>
                                             </select>&nbsp;&nbsp;&nbsp;
                                         </td>
                                     </tr>
@@ -352,8 +352,9 @@
                             <div class="d-flex justify-content-between align-items-center">
                                 <span class="h5">문제</span>
                                 <div>
-                                    <button class="btn btn-sm m-btn btn-outline-brand m-btn--custom" :class="selectedFilter_game > 0 && selectedFilter_topic > 0 && selectedFilter_questionaire > 0 ? '' : 'disabled'" @click="uploadQuestionClick()">엑셀로 추가</button>
-                                    <button class="btn btn-sm m-btn btn-outline-brand m-btn--custom" data-toggle="modal" data-target="#AddQuestionaireModal">개별 추가</button>
+                                    <button class="btn btn-sm m-btn btn-outline-brand m-btn--custom"
+                                            :class="selectedFilter_questionaire > 0 ? '' : 'disabled'"
+                                            @click="uploadQuestionClick">엑셀로 추가</button>
                                 </div>
                             </div>
                             <div class="m-datatable mt-1 question-item-table"></div>
@@ -422,28 +423,6 @@
                         <button class="btn btn-brand m-btn--custom m-btn btn-create-questionaire"
                                 :class="questionaireName && selectedFilter_topic > 0 ? '' : 'disabled'"
                                 @click="createQuestionaire">추가</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="AddQuestionaireModal" role="dialog">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5>소분류 추가</h5>
-                    <button class="close" data-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <input class="form-control m-input input-topic-name" placeholder="소분류 이름" v-model="questionaireName">
-                    </div>
-                </div>
-                <div class="modal-footer text-center">
-                    <div class="w-100">
-                        <button class="btn btn-brand m-btn--custom m-btn btn-create-questionaire"
-                                :class="selectedFilter_questionaire > 0 ? '' : 'disabled'"
-                                @click="createQuestionItem">추가</button>
                     </div>
                 </div>
             </div>
