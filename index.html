@@ -336,35 +336,7 @@
                     </div>
                     <div class="row">
                         <div class="col-12">
-                            <table class="table m-table m-table--head-separator-danger table-bordered table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>순서</th>
-                                        <th>이름</th>
-                                        <th>별명</th>
-                                        <th>이메일</th>
-                                        <th>전화번호</th>
-                                        <th>가입일</th>
-                                        <th>마지막 접속 일자</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-if="memberData instanceof Array && memberData.length === 0">
-                                        <td @click="memberClick(0)" class="m--align-center" colspan="8">표시할 회원 정보가 없습니다.</td>
-                                    </tr>
-                                    <tr v-for="(member, idx) in memberData">
-                                        <td>{{ idx + 1 }}</td>
-                                        <td>{{ member.name }}</td>
-                                        <td>{{ member.name }}</td>
-                                        <td>{{ member.email }}</td>
-                                        <td>{{ member.name }}</td>
-                                        <td>{{ member.name }}</td>
-                                        <td>{{ member.name }}</td>
-                                        <td>{{ member.name }}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <div class="m-datatable mt-1 user-table"></div>
                         </div>
                     </div>
                 </div>

@@ -1,5 +1,6 @@
 var topicDT = null
 var questionaireDT = null
+var questionItemDT = null
 
 function initTopicDataTable () {
     console.log('[datatable] init topic datatable from ' + API_V1 + '/topic')
@@ -42,6 +43,44 @@ function initTopicDataTable () {
 
 function initQuestionaireTable () {
     questionaireDT = $('.questionaire-table').mDatatable({
+        data: {
+            type: 'remote',
+            source: {
+                read: {
+                    url: API_V1 + '/questionaire',
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    map: function (raw) {
+                        raw.message.forEach((questionaire, index) => {
+                            raw.message[index].items_count = questionaire.items.length
+                        })
+                        return raw.message
+                    }
+                }
+            },
+            pageSize: 10,
+            serverPaging: false,
+            serverFiltering: false,
+            serverSorting: false,
+        },
+        columns: [
+            {
+                field: 'questionaireName',
+                title: '이름',
+            },
+            {
+                field: 'items_count',
+                title: '문제 수'
+            }
+        ]
+    })
+}
+
+function initQuestionItemTable () {
+    questionItemDT = $('.question-item-table').mDatatable({
         data: {
             type: 'remote',
             source: {

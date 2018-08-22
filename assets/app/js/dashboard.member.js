@@ -1,3 +1,60 @@
+var userDT = null
+
+function initUserTable () {
+    userDT = $('.user-table').mDatatable({
+        data: {
+            type: 'remote',
+            source: {
+                read: {
+                    url: API_V1 + '/user',
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    map: function (raw) {
+                        raw.message.forEach((user, index) => {
+                            raw.message[index].index = index + 1
+
+                        })
+                        return raw.message
+                    }
+                }
+            },
+            pageSize: 10,
+            serverPaging: false,
+            serverFiltering: false,
+            serverSorting: false,
+        },
+        columns: [
+            {
+                field: 'index',
+                title: '#',
+            },
+            {
+                field: 'name',
+                title: '이름'
+            },
+            {
+                field: 'nickname',
+                title: '별명'
+            },
+            {
+                field: 'email',
+                title: '이메일'
+            },
+            {
+                field: 'gender',
+                title: '성별'
+            },
+            {
+                field: 'birth',
+                title: '생년'
+            }
+        ]
+    })
+}
+
 $(document).ready(function () {
     var app = new Vue({
         el: '#app',
@@ -32,6 +89,7 @@ $(document).ready(function () {
         }
     });
     initRangeSelect()
+    initUserTable()
 })
 
 var start = moment()
