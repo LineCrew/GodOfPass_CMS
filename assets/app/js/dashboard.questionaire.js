@@ -2,121 +2,6 @@ var topicDT = null
 var questionaireDT = null
 var questionItemDT = null
 
-function initTopicDataTable () {
-    console.log('[datatable] init topic datatable from ' + API_V1 + '/topic')
-    topicDT = $('.topic-table').mDatatable({
-        data: {
-            type: 'remote',
-            source: {
-                read: {
-                    url : API_V1 + '/topic',
-                    method: 'GET',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    },
-                    map: function (raw) {
-                        raw.message.forEach((topic, index) => {
-                            raw.message[index].questionaires_count = topic.questionaires.length
-                        })
-                        return raw.message
-                    }
-                }
-            },
-            pageSize: 10,
-            serverPaging: false,
-            serverFiltering: false,
-            serverSorting: false,
-        },
-        columns: [
-            {
-                field: 'topicName',
-                title: '이름'
-            },
-            {
-                field: 'questionaires_count',
-                title: '포함된 소분류'
-            }
-        ]
-    })
-}
-
-function initQuestionaireTable () {
-    questionaireDT = $('.questionaire-table').mDatatable({
-        data: {
-            type: 'remote',
-            source: {
-                read: {
-                    url: API_V1 + '/questionaire',
-                    method: 'GET',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    },
-                    map: function (raw) {
-                        raw.message.forEach((questionaire, index) => {
-                            raw.message[index].items_count = questionaire.items.length
-                        })
-                        return raw.message
-                    }
-                }
-            },
-            pageSize: 10,
-            serverPaging: false,
-            serverFiltering: false,
-            serverSorting: false,
-        },
-        columns: [
-            {
-                field: 'questionaireName',
-                title: '이름',
-            },
-            {
-                field: 'items_count',
-                title: '문제 수'
-            }
-        ]
-    })
-}
-
-function initQuestionItemTable () {
-    questionItemDT = $('.question-item-table').mDatatable({
-        data: {
-            type: 'remote',
-            source: {
-                read: {
-                    url: API_V1 + '/questionaire',
-                    method: 'GET',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    },
-                    map: function (raw) {
-                        raw.message.forEach((questionaire, index) => {
-                            raw.message[index].items_count = questionaire.items.length
-                        })
-                        return raw.message
-                    }
-                }
-            },
-            pageSize: 10,
-            serverPaging: false,
-            serverFiltering: false,
-            serverSorting: false,
-        },
-        columns: [
-            {
-                field: 'questionaireName',
-                title: '이름',
-            },
-            {
-                field: 'items_count',
-                title: '문제 수'
-            }
-        ]
-    })
-}
-
 $(document).ready(function () {
     var app = new Vue({
         el: '#app',
@@ -124,7 +9,9 @@ $(document).ready(function () {
             topicData: [],
             showUploadModal: false,
             selectedFileName: '',
-            topicName: ''
+            selectedTopic: -1,
+            topicName: '',
+            questionaireName: '',
         },
         methods: {
             loadData () {
@@ -227,12 +114,151 @@ $(document).ready(function () {
                         }
                     })
                 }
-            }
+            },
+            createQuestionaire () {
+                console.log('Click: create questionaire', this.questionaireName)
+                if (this.questionaireName && this.selectedTopic > 0) {
+                    $.ajax({
+                        method: 'POST',
+                        url: API_V1 + '/questionaire/create',
+                        headers: {
+                            Accept: 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        dataType: 'json',
+                        data: JSON.stringify({
+                            topicId: Number.parseInt(this.selectedTopic),
+                            questionaireName: this.questionaireName
+                        }),
+                        success: res => {
+                            this.questionaireName = ''
+                            this.selectedTopic = -1
+                            questionaireDT.reload()
+                            this.loadData()
+                        },
+                        error: (xhr, errStatus, error) => {
+
+                        }
+                    })
+                }
+            },
+            initTopicDataTable () {
+                console.log('[datatable] init topic datatable from ' + API_V1 + '/topic')
+                topicDT = $('.topic-table').mDatatable({
+                    data: {
+                        type: 'remote',
+                        source: {
+                            read: {
+                                url : API_V1 + '/topic',
+                                method: 'GET',
+                                headers: {
+                                    'Accept': 'application/json',
+                                    'Content-Type': 'application/json'
+                                },
+                                map: function (raw) {
+                                    raw.message.forEach((topic, index) => {
+                                        raw.message[index].questionaires_count = topic.questionaires.length
+                                    })
+                                    return raw.message
+                                }
+                            }
+                        },
+                        pageSize: 10,
+                        serverPaging: false,
+                        serverFiltering: false,
+                        serverSorting: false,
+                    },
+                    columns: [
+                        {
+                            field: 'topicName',
+                            title: '이름'
+                        },
+                        {
+                            field: 'questionaires_count',
+                            title: '포함된 소분류'
+                        }
+                    ]
+                })
+            },
+            initQuestionaireTable () {
+                questionaireDT = $('.questionaire-table').mDatatable({
+                    data: {
+                        type: 'remote',
+                        source: {
+                            read: {
+                                url: API_V1 + '/questionaire',
+                                method: 'GET',
+                                headers: {
+                                    'Accept': 'application/json',
+                                    'Content-Type': 'application/json'
+                                },
+                                map: function (raw) {
+                                    raw.message.forEach((questionaire, index) => {
+                                        raw.message[index].items_count = questionaire.items.length
+                                    })
+                                    return raw.message
+                                }
+                            }
+                        },
+                        pageSize: 10,
+                        serverPaging: false,
+                        serverFiltering: false,
+                        serverSorting: false,
+                    },
+                    columns: [
+                        {
+                            field: 'questionaireName',
+                            title: '이름',
+                        },
+                        {
+                            field: 'items_count',
+                            title: '문제 수'
+                        }
+                    ]
+                })
+            },
+            initQuestionItemTable () {
+                questionItemDT = $('.question-item-table').mDatatable({
+                    data: {
+                        type: 'remote',
+                        source: {
+                            read: {
+                                url: API_V1 + '/questionaire',
+                                method: 'GET',
+                                headers: {
+                                    'Accept': 'application/json',
+                                    'Content-Type': 'application/json'
+                                },
+                                map: function (raw) {
+                                    let items = []
+                                    raw.message.forEach((questionaire, index) => {
+                                        questionaire.items.forEach(item => items.push(item))
+                                    })
+                                    return items
+                                }
+                            }
+                        },
+                        pageSize: 10,
+                        serverPaging: false,
+                        serverFiltering: false,
+                        serverSorting: false,
+                    },
+                    columns: [
+                        {
+                            field: 'id',
+                            title: '#',
+                        }
+                    ]
+                })
+            }            
         },
-        created: function () {
+        created () {
             this.loadData()
+        },
+        mounted () {
+            this.initTopicDataTable()
+            this.initQuestionaireTable()
+            this.initQuestionItemTable()
         }
     });
-    initTopicDataTable()
-    initQuestionaireTable()
 })

@@ -286,7 +286,7 @@
             </div>
         </header>
         <!-- end::Header -->
-        
+
         <!-- begin::Body -->
         <div class="m-grid__item m-grid__item--fluid  m-grid m-grid--ver-desktop m-grid--desktop m-page__container m-body">
             
@@ -298,9 +298,6 @@
                     <div class="d-flex align-items-center">
                         <div class="mr-auto">
                             <h3 class="m-subheader__title ">종목 관리</h3>
-                        </div>
-                        <div>
-                            <button class="btn m-btn m-btn--pill m-btn--air btn-brand m-btn--custom" @click="uploadQuestionClick()">문제 업로드</button>
                         </div>
                     </div>
                 </div>
@@ -363,11 +360,14 @@
                             <div class="m-datatable mt-1 questionaire-table"></div>
                         </div>
                     </div>    
-                    <div class="row">
+                    <div class="row mt-3">
                         <div class="col-12">
                             <div class="d-flex justify-content-between align-items-center">
-                                <span class="h5">소분류</span>
-                                <button class="btn btn-sm m-btn btn-outline-brand btn-add-questionaire" data-toggle="modal" data-target="#AddQuestionaireModal">+ 추가</button>
+                                <span class="h5">문제</span>
+                                <div>
+                                    <button class="btn btn-sm m-btn btn-outline-brand m-btn--custom" @click="uploadQuestionClick()">엑셀로 추가</button>
+                                    <button class="btn btn-sm m-btn btn-outline-brand m-btn--custom" data-toggle="modal" data-target="#AddQuestionaireModal">개별 추가</button>
+                                </div>
                             </div>
                             <div class="m-datatable mt-1 question-item-table"></div>
                         </div>
@@ -377,7 +377,7 @@
             
         </div>
         <!-- end::Body -->
-        
+
         <!-- begin::Footer -->
         <footer class="m-grid__item m-footer ">
             <div class="m-container m-container--fluid m-container--full-height m-page__container">
@@ -401,7 +401,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5>중분류 추가</h5>
-                    <button class="close"></button>
+                    <button class="close" data-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
                     <label><input type="radio" name="radio-game" value="3" class="m-radio radio-game"><span>자격증</span><span></span></label>
@@ -412,7 +412,9 @@
                 </div>
                 <div class="modal-footer text-center">
                     <div class="w-100">
-                        <button class="btn btn-brand m-btn--custom m-btn btn-create-topic" @click="createTopic">추가</button>
+                        <button class="btn btn-brand m-btn--custom m-btn"
+                                :class="topicName &&  ? '' : 'disabled'"
+                                @click="createTopic">추가</button>
                     </div>
                 </div>
             </div>
@@ -423,25 +425,28 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5>소분류 추가</h5>
-                    <button class="close"></button>
+                    <button class="close" data-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <select class="form-control m-input">
+                    <select class="form-control m-input" v-model="selectedTopic">
+                        <option value="-1">중분류 선택</option>
                         <option v-for="topic in topicData" :value="topic.id">{{ topic.topicName }}</option>
                     </select>
                     <div class="form-group">
-                        <input class="form-control m-input input-topic-name" placeholder="소분류 이름">
+                        <input class="form-control m-input input-topic-name" placeholder="소분류 이름" v-model="questionaireName">
                     </div>
                 </div>
                 <div class="modal-footer text-center">
                     <div class="w-100">
-                        <button class="btn btn-brand m-btn--custom m-btn btn-create-questionaire">추가</button>
+                        <button class="btn btn-brand m-btn--custom m-btn btn-create-questionaire"
+                                :class="questionaireName && selectedTopic > 0 ? '' : 'disabled'"
+                                @click="createQuestionaire">추가</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    
+
     <!-- begin::Scroll Top -->
     <div id="m_scroll_top" class="m-scroll-top">
         <i class="la la-arrow-up"></i>
