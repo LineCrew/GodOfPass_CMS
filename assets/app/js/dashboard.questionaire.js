@@ -1,38 +1,32 @@
 var topicDT = null
 var questionaireDT = null
 var questionItemDT = null
+var app = null
 
 $(document).ready(function () {
-    var app = new Vue({
+    app = new Vue({
         el: '#app',
         data: {
+            gameData: [],
             topicData: [],
+            questionaireData: [],
+            questionaireItemData: [],
             showUploadModal: false,
+            selectedFilter_game: -1,
+            selectedFilter_topic: -1,
+            selectedFilter_questionaire: -1,
             selectedFileName: '',
             selectedTopic: -1,
             topicName: '',
             questionaireName: '',
         },
         methods: {
-            loadData () {
-                getTopics(res => {
-                    if (res.statusCode == 200) {
-                        this.topicData = res.message
-                    }
-                })
-            },
             uploadQuestionClick () {
                 this.showUploadModal = true
                 swal({
                     target: document.getElementById('app'),
                     titleText: '문제 업로드',
-                    html:
-                    `<div class="row">
-                        <div class="col-12">
-                            <input class="custom-file-input" id="selected_excel_file" type="file" accept=".xlsx">
-                            <label class="custom-file-label" for="selected_excel_file">선택된 엑셀 파일 없음</label>
-                        </div>
-                    </div>`,
+                    html: $('#SelectExcel').html(),
                     confirmButtonText: '완료',
                     cancelButtonText: '취소',
                     showCancelButton: true,
@@ -101,7 +95,7 @@ $(document).ready(function () {
                         },
                         dataType: 'json',
                         data: JSON.stringify({
-                            gameId: Number.parseInt($('.radio-game:checked').val()),
+                            gameId: selectedFilter_game,
                             topicName: this.topicName
                         }),
                         success: res => {
@@ -142,6 +136,9 @@ $(document).ready(function () {
                     })
                 }
             },
+            createQuestionItem () {
+                console.log('Click: create question item', this.questionaireName)
+            },
             initTopicDataTable () {
                 console.log('[datatable] init topic datatable from ' + API_V1 + '/topic')
                 topicDT = $('.topic-table').mDatatable({
@@ -155,7 +152,8 @@ $(document).ready(function () {
                                     'Accept': 'application/json',
                                     'Content-Type': 'application/json'
                                 },
-                                map: function (raw) {
+                                map: raw => {
+                                    this.topicData = raw.message
                                     raw.message.forEach((topic, index) => {
                                         raw.message[index].questionaires_count = topic.questionaires.length
                                     })
@@ -192,7 +190,8 @@ $(document).ready(function () {
                                     'Accept': 'application/json',
                                     'Content-Type': 'application/json'
                                 },
-                                map: function (raw) {
+                                map: raw => {
+                                    this.questionaireData = raw.message
                                     raw.message.forEach((questionaire, index) => {
                                         raw.message[index].items_count = questionaire.items.length
                                     })
@@ -234,6 +233,7 @@ $(document).ready(function () {
                                     raw.message.forEach((questionaire, index) => {
                                         questionaire.items.forEach(item => items.push(item))
                                     })
+                                    this.questionaireItemData = items
                                     return items
                                 }
                             }
@@ -250,10 +250,22 @@ $(document).ready(function () {
                         }
                     ]
                 })
-            }            
+            }
         },
         created () {
-            this.loadData()
+            $.ajax(API_V1 + '/game', {
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                dataType: 'json',
+                success: res => {
+                    this.gameData = res.message
+                },
+                error: (xhr, errStatus, error) => {
+                    alert('대분류 데이터를 가져오지 못했습니다.')
+                }
+            })
         },
         mounted () {
             this.initTopicDataTable()

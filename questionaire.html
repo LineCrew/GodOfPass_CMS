@@ -311,32 +311,19 @@
                                         <td>종목 구분</td>
                                         <td>
                                             <span>대분류</span>
-                                            <select class="w-auto d-inline-block form-control m-input m-input--air">
-                                                <option selected>대분류 선택</option>
-                                                <option>종목 추가</option>
-                                                <option>공무원의 신</option>
-                                                <option>자격증의 신</option>
+                                            <select class="w-auto d-inline-block form-control m-input m-input--air" v-model="selectedFilter_game">
+                                                <option selected value="-1">대분류 선택</option>
+                                                <option v-for="game in gameData" :value="game.id">{{ game.gameName }}</option>
                                             </select>&nbsp;&nbsp;&nbsp;
                                             <span>중분류</span>
-                                            <select class="w-auto d-inline-block form-control m-input m-input--air">
-                                                <option selected>중분류 선택</option>
-                                                <option>7급</option>
-                                                <option>9급</option>
+                                            <select class="w-auto d-inline-block form-control m-input m-input--air" v-model="selectedFilter_topic">
+                                                <option selected value="-1">중분류 선택</option>
+                                                <option v-for="topic in topicData" :value="topic.id">{{ gameData.filter(game => game.id == topic.game_id)[0].gameName + ' - ' + topic.topicName }}</option>
                                             </select>&nbsp;&nbsp;&nbsp;
                                             <span>소분류</span>
-                                            <select class="w-auto d-inline-block form-control m-input m-input--air">
-                                                <option selected>소분류 선택</option>
-                                                <option>소분류 추가</option>
-                                                <option>국어</option>
-                                                <option>영어</option>
-                                                <option>한국사</option>
-                                                <option>헌법</option>
-                                                <option>행정법</option>
-                                                <option>행정학</option>
-                                                <option>경제학</option>
-                                                <option>교육학</option>
-                                                <option>회계학</option>
-                                                <option>세법개론</option>
+                                            <select class="w-auto d-inline-block form-control m-input m-input--air" v-model="selectedFilter_questionaire">
+                                                <option selected value="-1">소분류 선택</option>
+                                                <option v-for="questionaire in questionaireData" :value="questionaire.id">{{ topicData.filter(topic => topic.id == questionaire.topic_id)[0].topicName +  ' - ' + questionaire.questionaireName }}</option>
                                             </select>&nbsp;&nbsp;&nbsp;
                                         </td>
                                     </tr>
@@ -365,7 +352,7 @@
                             <div class="d-flex justify-content-between align-items-center">
                                 <span class="h5">문제</span>
                                 <div>
-                                    <button class="btn btn-sm m-btn btn-outline-brand m-btn--custom" @click="uploadQuestionClick()">엑셀로 추가</button>
+                                    <button class="btn btn-sm m-btn btn-outline-brand m-btn--custom" :class="selectedFilter_game > 0 && selectedFilter_topic > 0 && selectedFilter_questionaire > 0 ? '' : 'disabled'" @click="uploadQuestionClick()">엑셀로 추가</button>
                                     <button class="btn btn-sm m-btn btn-outline-brand m-btn--custom" data-toggle="modal" data-target="#AddQuestionaireModal">개별 추가</button>
                                 </div>
                             </div>
@@ -404,8 +391,6 @@
                     <button class="close" data-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <label><input type="radio" name="radio-game" value="3" class="m-radio radio-game"><span>자격증</span><span></span></label>
-                    <label><input type="radio" name="radio-game" value="1" class="m-radio radio-game" checked><span>공무원</span><span></span></label>
                     <div class="form-group">
                         <input class="form-control m-input input-topic-name" placeholder="중분류 이름" v-model="topicName">
                     </div>
@@ -413,7 +398,7 @@
                 <div class="modal-footer text-center">
                     <div class="w-100">
                         <button class="btn btn-brand m-btn--custom m-btn"
-                                :class="topicName &&  ? '' : 'disabled'"
+                                :class="topicName && selectedFilter_game > 0 ? '' : 'disabled'"
                                 @click="createTopic">추가</button>
                     </div>
                 </div>
@@ -428,10 +413,6 @@
                     <button class="close" data-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <select class="form-control m-input" v-model="selectedTopic">
-                        <option value="-1">중분류 선택</option>
-                        <option v-for="topic in topicData" :value="topic.id">{{ topic.topicName }}</option>
-                    </select>
                     <div class="form-group">
                         <input class="form-control m-input input-topic-name" placeholder="소분류 이름" v-model="questionaireName">
                     </div>
@@ -439,8 +420,30 @@
                 <div class="modal-footer text-center">
                     <div class="w-100">
                         <button class="btn btn-brand m-btn--custom m-btn btn-create-questionaire"
-                                :class="questionaireName && selectedTopic > 0 ? '' : 'disabled'"
+                                :class="questionaireName && selectedFilter_topic > 0 ? '' : 'disabled'"
                                 @click="createQuestionaire">추가</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="AddQuestionaireModal" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5>소분류 추가</h5>
+                    <button class="close" data-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input class="form-control m-input input-topic-name" placeholder="소분류 이름" v-model="questionaireName">
+                    </div>
+                </div>
+                <div class="modal-footer text-center">
+                    <div class="w-100">
+                        <button class="btn btn-brand m-btn--custom m-btn btn-create-questionaire"
+                                :class="selectedFilter_questionaire > 0 ? '' : 'disabled'"
+                                @click="createQuestionItem">추가</button>
                     </div>
                 </div>
             </div>
@@ -454,6 +457,14 @@
     <!-- end::Scroll Top -->
 </div>
 
+<script id="SelectExcel" type="text/template">
+    <div class="row">
+        <div class="col-12">
+                <input class="custom-file-input" id="selected_excel_file" type="file" accept=".xlsx">
+                <label class="custom-file-label" for="selected_excel_file">선택된 엑셀 파일 없음</label>
+        </div>
+    </div>
+</script>
 <!--begin::Base Scripts -->
 <script src="assets/vendors/base/vendors.bundle.js" type="text/javascript"></script>
 <script src="assets/demo/demo8/base/scripts.bundle.js" type="text/javascript"></script>
