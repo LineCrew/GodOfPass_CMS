@@ -89,11 +89,11 @@ $(document).ready(function () {
                         result.push({
                             number: content.v + normalizeNumber(parsedSheet[`B${row}`].v) + normalizeNumber(parsedSheet[`C${row}`].v),
                             question: (parsedSheet[`D${row}`].h).trim(),
-                            example: parsedSheet[`E${row}`] ? parsedSheet[`E${row}`].f || parsedSheet[`E${row}`].v : '',
-                            case_1: (parsedSheet[`F${row}`].v || '').trim(),
-                            case_2: (parsedSheet[`G${row}`].v || '').trim(),
-                            case_3: (parsedSheet[`H${row}`].v || '').trim(),
-                            case_4: (parsedSheet[`I${row}`].v || '').trim(),
+                            example: parsedSheet[`E${row}`] ? parsedSheet[`E${row}`].f + '' || parsedSheet[`E${row}`].v + '' : '',
+                            case_1: (parsedSheet[`F${row}`].v + '' || '').trim(),
+                            case_2: (parsedSheet[`G${row}`].v + '' || '').trim(),
+                            case_3: (parsedSheet[`H${row}`].v + '' || '').trim(),
+                            case_4: (parsedSheet[`I${row}`].v + '' || '').trim(),
                             case_5: case_count === 5 ? parsedSheet[`J${row}`].v || '' : '',
                             answer: case_count === 4 ? parsedSheet[`J${row}`].v || '' : parsedSheet[`K${row}`].v || '',
                         })
