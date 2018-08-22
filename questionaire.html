@@ -349,84 +349,18 @@
                     </div>
                     <div class="row">
                         <div class="col-5">
-                            <h6>중분류</h6>
-                            <table class="table m-table m-table--head-separator-danger table-bordered table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>대분류</th>
-                                        <th>이름</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td rowspan="2">공무원</td>
-                                        <td>7급</td>
-                                    </tr>        
-                                    <tr>
-                                        <td>9급</td>
-                                    </tr>
-                                    <tr>
-                                        <td rowspan="5">자격증</td>
-                                        <td>기능사</td>
-                                    </tr>
-                                    <tr>
-                                        <td>산업기사</td>
-                                    </tr>
-                                    <tr>
-                                        <td>기사</td>
-                                    </tr>
-                                    <tr>
-                                        <td>전문자격</td>
-                                    </tr>
-                                    <tr>
-                                        <td>서비스</td>
-                                    </tr>
-                                </tbody>
-                            </table>    
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="h5">중분류</span>
+                                <button class="btn btn-sm m-btn btn-outline-brand btn-add-topic" data-toggle="modal" data-target="#AddTopicModal">+ 추가</button>
+                            </div>
+                            <div class="m-datatable mt-1 topic-table"></div>
                         </div>
                         <div class="col-7">
-                            <h6>소분류</h6>
-                            <table class="table m-table m-table--head-separator-danger table-bordered table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>과목코드</th>
-                                        <th>이름</th>
-                                        <th>문제 수</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>101</td>
-                                        <td>국어</td>
-                                        <td>20개</td>
-                                    </tr>
-                                    <tr>
-                                        <td>101</td>
-                                        <td>영어</td>
-                                        <td>20개</td>
-                                    </tr>
-                                    <tr>
-                                        <td>101</td>
-                                        <td>한국사</td>
-                                        <td>20개</td>
-                                    </tr>
-                                    <tr>
-                                        <td>101</td>
-                                        <td>행정학개론</td>
-                                        <td>20개</td>
-                                    </tr>
-                                    <tr>
-                                        <td>101</td>
-                                        <td>행정법총론</td>
-                                        <td>20개</td>
-                                    </tr>
-                                    <tr>
-                                        <td>101</td>
-                                        <td>교육학개론</td>
-                                        <td>20개</td>
-                                    </tr>
-                                </tbody>
-                            </table>        
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="h5">소분류</span>
+                                <button class="btn btn-sm m-btn btn-outline-brand btn-add-questionaire" data-toggle="modal" data-target="#AddQuestionaireModal">+ 추가</button>
+                            </div>
+                            <div class="m-datatable mt-1 questionaire-table"></div>
                         </div>
                     </div>    
                     <div class="row">
@@ -477,6 +411,52 @@
         <!-- end::Footer -->
     </div>
     <!-- end:: Page -->
+
+    <div class="modal fade" id="AddTopicModal" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5>중분류 추가</h5>
+                    <button class="close"></button>
+                </div>
+                <div class="modal-body">
+                    <label><input type="radio" name="radio-game" value="3" class="m-radio radio-game"><span>자격증</span><span></span></label>
+                    <label><input type="radio" name="radio-game" value="1" class="m-radio radio-game" checked><span>공무원</span><span></span></label>
+                    <div class="form-group">
+                        <input class="form-control m-input input-topic-name" placeholder="중분류 이름" v-model="topicName">
+                    </div>
+                </div>
+                <div class="modal-footer text-center">
+                    <div class="w-100">
+                        <button class="btn btn-brand m-btn--custom m-btn btn-create-topic" @click="createTopic">추가</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="AddQuestionaireModal" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5>소분류 추가</h5>
+                    <button class="close"></button>
+                </div>
+                <div class="modal-body">
+                    <select class="form-control m-input">
+                        <option v-for="topic in topicData" :value="topic.id">{{ topic.topicName }}</option>
+                    </select>
+                    <div class="form-group">
+                        <input class="form-control m-input input-topic-name" placeholder="소분류 이름">
+                    </div>
+                </div>
+                <div class="modal-footer text-center">
+                    <div class="w-100">
+                        <button class="btn btn-brand m-btn--custom m-btn btn-create-questionaire">추가</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     
     <!-- begin::Scroll Top -->
     <div id="m_scroll_top" class="m-scroll-top">

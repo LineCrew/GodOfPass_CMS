@@ -1,15 +1,101 @@
+var topicDT = null
+var questionaireDT = null
+
+function initTopicDataTable () {
+    console.log('[datatable] init topic datatable from ' + API_V1 + '/topic')
+    topicDT = $('.topic-table').mDatatable({
+        data: {
+            type: 'remote',
+            source: {
+                read: {
+                    url : API_V1 + '/topic',
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    map: function (raw) {
+                        raw.message.forEach((topic, index) => {
+                            raw.message[index].questionaires_count = topic.questionaires.length
+                        })
+                        return raw.message
+                    }
+                }
+            },
+            pageSize: 10,
+            serverPaging: false,
+            serverFiltering: false,
+            serverSorting: false,
+        },
+        columns: [
+            {
+                field: 'topicName',
+                title: '이름'
+            },
+            {
+                field: 'questionaires_count',
+                title: '포함된 소분류'
+            }
+        ]
+    })
+}
+
+function initQuestionaireTable () {
+    questionaireDT = $('.questionaire-table').mDatatable({
+        data: {
+            type: 'remote',
+            source: {
+                read: {
+                    url: API_V1 + '/questionaire',
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    map: function (raw) {
+                        raw.message.forEach((questionaire, index) => {
+                            raw.message[index].items_count = questionaire.items.length
+                        })
+                        return raw.message
+                    }
+                }
+            },
+            pageSize: 10,
+            serverPaging: false,
+            serverFiltering: false,
+            serverSorting: false,
+        },
+        columns: [
+            {
+                field: 'questionaireName',
+                title: '이름',
+            },
+            {
+                field: 'items_count',
+                title: '문제 수'
+            }
+        ]
+    })
+}
+
 $(document).ready(function () {
     var app = new Vue({
         el: '#app',
         data: {
+            topicData: [],
             showUploadModal: false,
-            selectedFileName: ''
+            selectedFileName: '',
+            topicName: ''
         },
         methods: {
-            loadQuestionaireData () {
-
+            loadData () {
+                getTopics(res => {
+                    if (res.statusCode == 200) {
+                        this.topicData = res.message
+                    }
+                })
             },
-            uploadQuestionClick: function () {
+            uploadQuestionClick () {
                 this.showUploadModal = true
                 swal({
                     target: document.getElementById('app'),
@@ -76,9 +162,38 @@ $(document).ready(function () {
                     }
                 }
                 console.log(result)
+            },
+            createTopic () {
+                console.log('Click: create topic', this.topicName)
+                if (this.topicName) {
+                    $.ajax({
+                        method: 'POST',
+                        url: API_V1 + '/topic/createTopic',
+                        headers: {
+                            Accept: 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        dataType: 'json',
+                        data: JSON.stringify({
+                            gameId: Number.parseInt($('.radio-game:checked').val()),
+                            topicName: this.topicName
+                        }),
+                        success: res => {
+                            this.topicName = ''
+                            topicDT.reload()
+                            this.loadData()
+                        },
+                        error: (xhr, errStatus, error) => {
+
+                        }
+                    })
+                }
             }
         },
         created: function () {
+            this.loadData()
         }
     });
+    initTopicDataTable()
+    initQuestionaireTable()
 })

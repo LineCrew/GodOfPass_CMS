@@ -28,3 +28,7 @@ body {
 .swal2-popup #swal2-content {
     text-align: left;
 }
+#date-range-select {
+    cursor: pointer;
+    padding: 5px 10px;
+}

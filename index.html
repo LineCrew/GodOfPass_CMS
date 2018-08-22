@@ -272,11 +272,11 @@
                             <div id="m_header_menu" class="m-header-menu m-aside-header-menu-mobile m-aside-header-menu-mobile--offcanvas  m-header-menu--skin-dark m-header-menu--submenu-skin-light m-aside-header-menu-mobile--skin-light m-aside-header-menu-mobile--submenu-skin-light ">
                                 <ul class="m-menu__nav  m-menu__nav--submenu-arrow ">
                                     <li class="m-menu__item  m-menu__item--active  m-menu__item--active-tab  m-menu__item--submenu m-menu__item--tabs" m-menu-submenu-toggle="tab" aria-haspopup="true"><a href="index.html" class="m-menu__link m-menu__toggle"><span class="m-menu__link-text">회원 관리</span><i class="m-menu__hor-arrow la la-angle-down"></i><i class="m-menu__ver-arrow la la-angle-right"></i></a></li>
-                                    <li class="m-menu__item  m-menu__item--submenu m-menu__item--tabs" m-menu-submenu-toggle="tab" aria-haspopup="true"><a href="questionaire.html" class="m-menu__link m-menu__toggle"><span class="m-menu__link-text">종목 관리</span><i class="m-menu__hor-arrow la la-angle-down"></i><i class="m-menu__ver-arrow la la-angle-right"></i></a></li>
-                                    <li class="m-menu__item  m-menu__item--submenu m-menu__item--tabs" m-menu-submenu-toggle="tab" aria-haspopup="true"><a href="statistics.html" class="m-menu__link m-menu__toggle"><span class="m-menu__link-text">통계 관리</span><i class="m-menu__hor-arrow la la-angle-down"></i><i class="m-menu__ver-arrow la la-angle-right"></i></a></li>
-                                    <li class="m-menu__item  m-menu__item--submenu m-menu__item--tabs" m-menu-submenu-toggle="tab" aria-haspopup="true"><a href="sales.html" class="m-menu__link m-menu__toggle"><span class="m-menu__link-text">매출 관리</span><i class="m-menu__hor-arrow la la-angle-down"></i><i class="m-menu__ver-arrow la la-angle-right"></i></a></li>
-                                    <li class="m-menu__item  m-menu__item--submenu m-menu__item--tabs" m-menu-submenu-toggle="tab" aria-haspopup="true"><a href="customer_service.html" class="m-menu__link m-menu__toggle"><span class="m-menu__link-text">고객 지원</span><i class="m-menu__hor-arrow la la-angle-down"></i><i class="m-menu__ver-arrow la la-angle-right"></i></a></li>
-                                    <li class="m-menu__item  m-menu__item--submenu m-menu__item--tabs" m-menu-submenu-toggle="tab" aria-haspopup="true"><a href="etc.html" class="m-menu__link m-menu__toggle"><span class="m-menu__link-text">기타 관리</span><i class="m-menu__hor-arrow la la-angle-down"></i><i class="m-menu__ver-arrow la la-angle-right"></i></a></li>
+                                    <li class="m-menu__item  m-menu__item--submenu m-menu__item--tabs" m-menu-submenu-toggle="tab"><a href="questionaire.html" class="m-menu__link m-menu__toggle"><span class="m-menu__link-text">종목 관리</span><i class="m-menu__hor-arrow la la-angle-down"></i><i class="m-menu__ver-arrow la la-angle-right"></i></a></li>
+                                    <li class="m-menu__item  m-menu__item--submenu m-menu__item--tabs" m-menu-submenu-toggle="tab"><a href="statistics.html" class="m-menu__link m-menu__toggle"><span class="m-menu__link-text">통계 관리</span><i class="m-menu__hor-arrow la la-angle-down"></i><i class="m-menu__ver-arrow la la-angle-right"></i></a></li>
+                                    <li class="m-menu__item  m-menu__item--submenu m-menu__item--tabs" m-menu-submenu-toggle="tab"><a href="sales.html" class="m-menu__link m-menu__toggle"><span class="m-menu__link-text">매출 관리</span><i class="m-menu__hor-arrow la la-angle-down"></i><i class="m-menu__ver-arrow la la-angle-right"></i></a></li>
+                                    <li class="m-menu__item  m-menu__item--submenu m-menu__item--tabs" m-menu-submenu-toggle="tab"><a href="customer_service.html" class="m-menu__link m-menu__toggle"><span class="m-menu__link-text">고객 지원</span><i class="m-menu__hor-arrow la la-angle-down"></i><i class="m-menu__ver-arrow la la-angle-right"></i></a></li>
+                                    <li class="m-menu__item  m-menu__item--submenu m-menu__item--tabs" m-menu-submenu-toggle="tab"><a href="etc.html" class="m-menu__link m-menu__toggle"><span class="m-menu__link-text">기타 관리</span><i class="m-menu__hor-arrow la la-angle-down"></i><i class="m-menu__ver-arrow la la-angle-right"></i></a></li>
                                 </ul>
                             </div>
                         </div>
@@ -310,20 +310,10 @@
                                     <tr>
                                         <td>조회 기간</td>
                                         <td>
-                                            <select class="w-auto d-inline-block form-control m-input m-input--air">
-                                                <option selected>기간 선택</option>
-                                                <option>달력 선택</option>
-                                                <option>전체</option>
-                                                <option>현재</option>
-                                                <option>오늘</option>
-                                                <option>어제</option>
-                                                <option>이번 주</option>
-                                                <option>저번 주</option>
-                                                <option>이번 달</option>
-                                                <option>저번 달</option>
-                                            </select>
-                                            <input class="w-auto d-inline-block form-control m-input m-input--air" type="date" />
-                                            <input class="w-auto d-inline-block form-control m-input m-input--air" type="date" />    
+                                            <div id="date-range-select">
+                                                <i class="fa fa-calendar"></i>&nbsp;
+                                                <span></span> <i class="fa fa-caret-down"></i>
+                                            </div>
                                         </td>
                                     </tr>
                                     <tr>
@@ -418,6 +408,9 @@
 
 <!--begin::Page Vendors -->
 <script src="assets/vendors/custom/fullcalendar/fullcalendar.bundle.js" type="text/javascript"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 <!--end::Page Vendors -->
 
 <!--begin::Page Snippets -->
@@ -428,8 +421,8 @@
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <!-- end::Vue.js script -->
 
-<script src="assets/app/js/dashboard.member.js"></script>
 <script src="assets/app/js/dashboard.common.js"></script>
+<script src="assets/app/js/dashboard.member.js"></script>
 
 <!-- begin::Page Loader -->
 <script>

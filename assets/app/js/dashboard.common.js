@@ -1,3 +1,6 @@
+var BASE_URL = 'http://13.125.174.175:3000'
+var API_V1 = BASE_URL + '/api/v1'
+
 Vue.component('user-detail-modal', {
     template:
     `<div id="userDetailModal" class="modal fade" role="dialog">
@@ -71,7 +74,7 @@ Vue.component('user-detail-modal', {
         if (this.userId) {
             $.ajax({
                 method: 'GET',
-                url: `http://52.230.5.59:3000/api/v1/user/${this.userId}`,
+                url: API_V1 + `/user/${this.userId}`,
                 dataType: 'application/json',
                 success: res => {
                     this.userData = res.message
@@ -102,3 +105,21 @@ Vue.component('user-detail-modal', {
         $('#userDetailModal').modal('show')
     }
 })
+
+function getTopics (callback) {
+    $.ajax(API_V1 + '/topic', {
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        dataType: 'json',
+        success: res => {
+            if (callback != undefined) {
+                callback(res)
+            }
+        },
+        error: (xhr, errStatus, error) => {
+            alert('중분류 데이터를 가져오지 못했습니다.')
+        }
+    })
+}
