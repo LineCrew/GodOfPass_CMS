@@ -80,15 +80,16 @@ $(document).ready(function () {
                     var content = parsedSheet[`A${row}`]
                     if (content) {
                         result.push({
+                            questionaireId: this.selectedFilter_questionaire,
                             number: content.v + normalizeNumber(parsedSheet[`B${row}`].v, 6) + normalizeNumber(parsedSheet[`C${row}`].v, 4),
-                            question: (parsedSheet[`D${row}`].h).trim(),
+                            content: (parsedSheet[`D${row}`].h).trim(),
                             example: parsedSheet[`E${row}`] ? parsedSheet[`E${row}`].f + '' || parsedSheet[`E${row}`].v + '' : '',
-                            case_1: (parsedSheet[`F${row}`].v + '' || '').trim(),
-                            case_2: (parsedSheet[`G${row}`].v + '' || '').trim(),
-                            case_3: (parsedSheet[`H${row}`].v + '' || '').trim(),
-                            case_4: (parsedSheet[`I${row}`].v + '' || '').trim(),
-                            case_5: case_count === 5 ? parsedSheet[`J${row}`].v || '' : '',
-                            answer: case_count === 4 ? parsedSheet[`J${row}`].v || '' : parsedSheet[`K${row}`].v || '',
+                            case1: (parsedSheet[`F${row}`].v + '' || '').trim(),
+                            case2: (parsedSheet[`G${row}`].v + '' || '').trim(),
+                            case3: (parsedSheet[`H${row}`].v + '' || '').trim(),
+                            case4: (parsedSheet[`I${row}`].v + '' || '').trim(),
+                            case5: case_count === 5 ? parsedSheet[`J${row}`].v || '' : '',
+                            answer: case_count === 4 ? parsedSheet[`J${row}`].v || 0 : parsedSheet[`K${row}`].v || 0,
                         })
                         // console.log('formatted text: ', parsedSheet[`E${row}`] ? parsedSheet[`E${row}`].h : '')
                         row++
@@ -97,10 +98,16 @@ $(document).ready(function () {
                     }
                 }
                 result.forEach(item => {
-                    this.uploadQuestionItem(item)
+                    if (JSON.stringify(result[result.length - 1]) == JSON.stringify(item)) {
+                        this.uploadQuestionItem(item, _ => {
+                            swal.close()
+                        })
+                    } else {
+                        this.uploadQuestionItem(item)
+                    }
                 })
             },
-            async uploadQuestionItem (item) {
+            async uploadQuestionItem (item, callback) {
                 item.number = Number.parseInt(item.number)
                 $.ajax({
                     method: 'POST',
@@ -112,10 +119,16 @@ $(document).ready(function () {
                     dataType: 'json',
                     data: JSON.stringify(item),
                     success: res => {
-                        console.log('upload succeeded: ' + item.number)                        
+                        console.log('upload succeeded: ' + item.number)
+                        if (callback != undefined) {
+                            callback()
+                        }
                     },
                     error: (xhr, errStatus, error) => {
                         console.log('upload failed: ', item.number)
+                        if (callback != undefined) {
+                            callback()
+                        }
                     }
                 })
             },
@@ -295,23 +308,23 @@ $(document).ready(function () {
                             title: 'example'
                         },
                         {
-                            field: 'case_1',
+                            field: 'case1',
                             title: 'case 1'
                         },
                         {
-                            field: 'case_2',
+                            field: 'case2',
                             title: 'case 2'
                         },
                         {
-                            field: 'case_3',
+                            field: 'case3',
                             title: 'case 3'
                         },
                         {
-                            field: 'case_4',
+                            field: 'case4',
                             title: 'case 4'
                         },
                         {
-                            field: 'case_5',
+                            field: 'case5',
                             title: 'case 5'
                         },
                         {
