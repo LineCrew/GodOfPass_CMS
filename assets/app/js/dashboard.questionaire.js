@@ -48,20 +48,20 @@ $(document).ready(function () {
                     console.log('file selected')
                     try {
                         // true: readAsBinaryString ; false: readAsArrayBuffer
-                        var rABS = true;
-                        var files = event.target.files, f = files[0];
+                        var rABS = true
+                        var files = event.target.files, f = files[0]
                         this.selectedFileName = f.name
                         $('.custom-file-label').text(f.name)
                         var fileReader = new FileReader()
                         
                         fileReader.onload = function(e) {
-                            var data = e.target.result;
-                            if(!rABS) data = new Uint8Array(data);
-                            var workbook = XLSX.read(data, {type: rABS ? 'binary' : 'array'});
+                            var data = e.target.result
+                            if(!rABS) data = new Uint8Array(data)
+                            var workbook = XLSX.read(data, {type: rABS ? 'binary' : 'array'})
                             app.parseExcelQuestionaireFile(workbook)
                         }
 
-                        if (rABS) fileReader.readAsBinaryString(f); else fileReader.readAsArrayBuffer(f);
+                        if (rABS) fileReader.readAsBinaryString(f); else fileReader.readAsArrayBuffer(f)
                     } catch (e) {
                         console.error('cannot parse file.', e)
                     }
@@ -90,7 +90,7 @@ $(document).ready(function () {
                                 case3: (parsedSheet[`H${row}`].h + '' || '').trim(),
                                 case4: (parsedSheet[`I${row}`].h + '' || '').trim(),
                                 case5: case_count === 5 ? parsedSheet[`J${row}`].h || '' : '',
-                                answer: case_count === 4 ? parsedSheet[`J${row}`].v || 0 : parsedSheet[`K${row}`].v || 0,
+                                answer: this.convertAnswerNumber(case_count === 4 ? parsedSheet[`J${row}`].v || 0 : parsedSheet[`K${row}`].v || 0),
                             })
                             row++
                         } catch (e) {
@@ -112,6 +112,43 @@ $(document).ready(function () {
                         this.uploadQuestionItem(item)
                     }
                 })
+            },
+            convertAnswerNumber (answer) {
+                if (typeof answer === 'number') {
+                    return answer
+                }
+                let result = 0
+                switch (answer) {
+                    case '①':
+                    case '가':
+                    case '㉮':
+                        result = 1
+                        break
+                    case '②':
+                    case '나':
+                    case '㉯':
+                        result = 2
+                        break
+                    case '③':
+                    case '다':
+                    case '㉰':
+                        result = 3
+                        break
+                    case '④':
+                    case '라':
+                    case '㉱':
+                        result = 4
+                        break
+                    case '⑤':
+                    case '마':
+                    case '㉲':
+                        result = 5
+                        break
+                    default:
+                        result = answer
+                        break
+                }
+                return result
             },
             async uploadQuestionItem (item, callback) {
                 item.number = Number.parseInt(item.number)
@@ -370,5 +407,5 @@ $(document).ready(function () {
                 }
             }
         }
-    });
+    })
 })
