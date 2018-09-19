@@ -83,13 +83,13 @@ $(document).ready(function () {
                             result.push({
                                 questionaireId: this.selectedFilter_questionaire,
                                 number: content.v + normalizeNumber(parsedSheet[`B${row}`].v, 6) + normalizeNumber(parsedSheet[`C${row}`].v, 4),
-                                content: (parsedSheet[`D${row}`].v).trim(),
+                                content: (parsedSheet[`D${row}`].h).trim(),
                                 example: parsedSheet[`E${row}`] ? parsedSheet[`E${row}`].h || parsedSheet[`E${row}`].v + '' || '' : '',
-                                case1: (parsedSheet[`F${row}`].v + '' || '').trim(),
-                                case2: (parsedSheet[`G${row}`].v + '' || '').trim(),
-                                case3: (parsedSheet[`H${row}`].v + '' || '').trim(),
-                                case4: (parsedSheet[`I${row}`].v + '' || '').trim(),
-                                case5: case_count === 5 ? parsedSheet[`J${row}`].v || '' : '',
+                                case1: (parsedSheet[`F${row}`].h + '' || '').trim(),
+                                case2: (parsedSheet[`G${row}`].h + '' || '').trim(),
+                                case3: (parsedSheet[`H${row}`].h + '' || '').trim(),
+                                case4: (parsedSheet[`I${row}`].h + '' || '').trim(),
+                                case5: case_count === 5 ? parsedSheet[`J${row}`].h || '' : '',
                                 answer: case_count === 4 ? parsedSheet[`J${row}`].v || 0 : parsedSheet[`K${row}`].v || 0,
                             })
                             row++
