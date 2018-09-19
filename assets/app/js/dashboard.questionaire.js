@@ -79,20 +79,25 @@ $(document).ready(function () {
                 while (true) {
                     var content = parsedSheet[`A${row}`]
                     if (content) {
-                        result.push({
-                            questionaireId: this.selectedFilter_questionaire,
-                            number: content.v + normalizeNumber(parsedSheet[`B${row}`].v, 6) + normalizeNumber(parsedSheet[`C${row}`].v, 4),
-                            content: (parsedSheet[`D${row}`].h).trim(),
-                            example: parsedSheet[`E${row}`] ? parsedSheet[`E${row}`].f + '' || parsedSheet[`E${row}`].v + '' : '',
-                            case1: (parsedSheet[`F${row}`].v + '' || '').trim(),
-                            case2: (parsedSheet[`G${row}`].v + '' || '').trim(),
-                            case3: (parsedSheet[`H${row}`].v + '' || '').trim(),
-                            case4: (parsedSheet[`I${row}`].v + '' || '').trim(),
-                            case5: case_count === 5 ? parsedSheet[`J${row}`].v || '' : '',
-                            answer: case_count === 4 ? parsedSheet[`J${row}`].v || 0 : parsedSheet[`K${row}`].v || 0,
-                        })
+                        try {
+                            result.push({
+                                questionaireId: this.selectedFilter_questionaire,
+                                number: content.v + normalizeNumber(parsedSheet[`B${row}`].v, 6) + normalizeNumber(parsedSheet[`C${row}`].v, 4),
+                                content: (parsedSheet[`D${row}`].v).trim(),
+                                example: parsedSheet[`E${row}`] ? parsedSheet[`E${row}`].h || parsedSheet[`E${row}`].v + '' || '' : '',
+                                case1: (parsedSheet[`F${row}`].v + '' || '').trim(),
+                                case2: (parsedSheet[`G${row}`].v + '' || '').trim(),
+                                case3: (parsedSheet[`H${row}`].v + '' || '').trim(),
+                                case4: (parsedSheet[`I${row}`].v + '' || '').trim(),
+                                case5: case_count === 5 ? parsedSheet[`J${row}`].v || '' : '',
+                                answer: case_count === 4 ? parsedSheet[`J${row}`].v || 0 : parsedSheet[`K${row}`].v || 0,
+                            })
+                            row++
+                        } catch (e) {
+                            alert('데이터를 읽어들이는 중 ' + row + '줄에서 오류가 발생했습니다.')
+                            return
+                        }
                         // console.log('formatted text: ', parsedSheet[`E${row}`] ? parsedSheet[`E${row}`].h : '')
-                        row++
                     } else {
                         break
                     }
@@ -101,6 +106,7 @@ $(document).ready(function () {
                     if (JSON.stringify(result[result.length - 1]) == JSON.stringify(item)) {
                         this.uploadQuestionItem(item, _ => {
                             swal.close()
+                            questionItemDT.reload()
                         })
                     } else {
                         this.uploadQuestionItem(item)
