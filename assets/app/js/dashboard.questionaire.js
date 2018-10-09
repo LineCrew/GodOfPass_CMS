@@ -91,6 +91,7 @@ $(document).ready(function () {
                                 case4: (parsedSheet[`I${row}`].h + '' || '').trim(),
                                 case5: case_count === 5 ? parsedSheet[`J${row}`].h || '' : '',
                                 answer: this.convertAnswerNumber(case_count === 4 ? parsedSheet[`J${row}`].v || 0 : parsedSheet[`K${row}`].v || 0),
+                                limitTime: this.getLimitTime((parsedSheet[`D${row}`].h).trim().length)
                             })
                             row++
                         } catch (e) {
@@ -112,6 +113,35 @@ $(document).ready(function () {
                         this.uploadQuestionItem(item)
                     }
                 })
+            },
+            getLimitTime (length) {
+                if (length <= 0) {
+                    return 0
+                }
+                if (length > 0 && length < 100) {
+                    return 10
+                }
+                if (length >= 100 && length < 200) {
+                    return 15
+                }
+                if (length >= 200 && length < 300) {
+                    return 20
+                }
+                if (length >= 300 && length < 400) {
+                    return 25
+                }
+                if (length >= 400 && length < 500) {
+                    return 30
+                }
+                if (length >= 500 && length < 600) {
+                    return 35
+                }
+                if (length >= 600 && length < 700) {
+                    return 40
+                }
+                if (length >= 700 && length < 800) {
+                    return 45
+                }
             },
             convertAnswerNumber (answer) {
                 if (typeof answer === 'number') {
