@@ -318,12 +318,12 @@
                                             <span>중분류</span>
                                             <select class="w-auto d-inline-block form-control m-input m-input--air" v-model="selectedFilter_topic">
                                                 <option selected value="-1">중분류 선택</option>
-                                                <option v-for="topic in topicData" :value="topic.id">{{ (gameData.length > 0 ? gameData.filter(game => game.id == topic.game_id)[0].gameName : '') + ' - ' + topic.topicName }}</option>
+                                                <option v-for="topic in topicData.filter(topic => topic.game_id === selectedFilter_game)" :value="topic.id">{{ (selectedFilter_game > -1 ? gameData.filter(game => game.id === selectedFilter_game)[0].gameName : '') + ' - ' + topic.topicName }}</option>
                                             </select>&nbsp;&nbsp;&nbsp;
                                             <span>소분류</span>
                                             <select class="w-auto d-inline-block form-control m-input m-input--air" v-model="selectedFilter_questionaire">
                                                 <option selected value="-1">소분류 선택</option>
-                                                <option v-for="questionaire in questionaireData" :value="questionaire.id">{{ (topicData.length > 0 ? topicData.filter(topic => topic.id == questionaire.topic_id)[0].topicName : '') +  ' - ' + questionaire.questionaireName }}</option>
+                                                <option v-for="questionaire in questionaireData.filter(questionaire => questionaire.topic_id === selectedFilter_topic)" :value="questionaire.id">{{ (selectedFilter_topic > -1 ? topicData.filter(topic => topic.id == selectedFilter_topic)[0].topicName : '') +  ' - ' + questionaire.questionaireName }}</option>
                                             </select>&nbsp;&nbsp;&nbsp;
                                         </td>
                                     </tr>
