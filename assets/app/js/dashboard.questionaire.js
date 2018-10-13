@@ -147,6 +147,9 @@ $(document).ready(function () {
                 if (typeof answer === 'number') {
                     return answer
                 }
+                if (typeof answer === 'string') {
+                    answer = answ.trim()
+                }
                 let result = 0
                 switch (answer) {
                     case '①':
