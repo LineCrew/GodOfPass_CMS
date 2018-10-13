@@ -26,6 +26,8 @@ $(document).ready(function () {
             selectedFilter_questionaire: -1,
             selectedFileName: '',
             selectedTopic: -1,
+            isTopicDataLoaded: false,
+            isQuestionaireDataLoaded: false,
             topicName: '',
             questionaireName: '',
         },
@@ -276,11 +278,11 @@ $(document).ready(function () {
                                     'Content-Type': 'application/json'
                                 },
                                 map: raw => {
-                                    this.topicData = raw.message
-                                    raw.message.forEach((topic, index) => {
-                                        raw.message[index].questionaires_count = topic.questionaires.length
+                                    this.topicData = this.selectedFilter_game > -1 ? raw.message.filter(topic => this.selectedFilter_game === topic.game_id) : raw.message
+                                    this.topicData.forEach((topic, index) => {
+                                        this.topicData[index].questionaires_count = topic.questionaires.length
                                     })
-                                    return raw.message
+                                    return this.topicData
                                 }
                             }
                         },
@@ -291,6 +293,10 @@ $(document).ready(function () {
                     },
                     columns: [
                         {
+                            field: 'game_id',
+                            title: '대분류 ID'
+                        },
+                        {
                             field: 'topicName',
                             title: '이름'
                         },
@@ -299,6 +305,9 @@ $(document).ready(function () {
                             title: '포함된 소분류'
                         }
                     ]
+                })
+                topicDT.on('m-datatable--on-ajax-done', _ => {
+                    this.isTopicDataLoaded = true
                 })
             },
             initQuestionaireTable () {
@@ -314,11 +323,11 @@ $(document).ready(function () {
                                     'Content-Type': 'application/json'
                                 },
                                 map: raw => {
-                                    this.questionaireData = raw.message
-                                    raw.message.forEach((questionaire, index) => {
-                                        raw.message[index].items_count = questionaire.items.length
+                                    this.questionaireData = this.selectedFilter_topic > -1 ? raw.message.filter(questionaire => this.selectedFilter_topic === questionaire.topic_id) : raw.message
+                                    this.questionaireData.forEach((questionaire, index) => {
+                                        this.questionaireData[index].items_count = questionaire.items.length
                                     })
-                                    return raw.message
+                                    return this.questionaireData
                                 }
                             }
                         },
@@ -328,6 +337,10 @@ $(document).ready(function () {
                         serverSorting: false,
                     },
                     columns: [
+                        {
+                            field: 'topic_id',
+                            title: '중분류 ID'
+                        },
                         {
                             field: 'questionaireName',
                             title: '이름',
@@ -351,13 +364,18 @@ $(document).ready(function () {
                                     'Accept': 'application/json',
                                     'Content-Type': 'application/json'
                                 },
-                                map: function (raw) {
+                                map: raw => {
+                                    console.log('question id: ' + this.selectedFilter_questionaire + ' topic id: ' + this.selectedFilter_topic + ' item data: ', raw.message)
+
                                     let items = []
-                                    raw.message.forEach((questionaire, index) => {
-                                        questionaire.items.forEach(item => items.push(item))
+                                    raw.message.forEach(questionaire => {
+                                        if (this.selectedFilter_questionaire === -1 || questionaire.id === this.selectedFilter_questionaire) {
+                                            console.log('questionItems ' + questionaire.items)
+                                            questionaire.items.forEach(item => items.push(item))
+                                        }
                                     })
                                     this.questionaireItemData = items
-                                    return items
+                                    return this.questionaireItemData
                                 }
                             }
                         },
@@ -433,11 +451,17 @@ $(document).ready(function () {
         },
         watch: {
             selectedFilter_game (newGame) {
-                if (newGame == -1) {
-
-                } else {
-                    
+                if (this.isTopicDataLoaded) {
+                    // this.selectedFilter_game > -1 ? topicDT.search(this.selectedFilter_game, 'game_id') : topicDT.search('')
+                    console.log('search by selected game id: ' + this.selectedFilter_game)
+                    topicDT.reload()
                 }
+            },
+            selectedFilter_topic () {
+                questionaireDT.reload()
+            },
+            selectedFilter_questionaire () {
+                questionItemDT.reload()
             }
         }
     })
