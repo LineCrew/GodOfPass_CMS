@@ -148,7 +148,7 @@ $(document).ready(function () {
                     return answer
                 }
                 if (typeof answer === 'string') {
-                    answer = answ.trim()
+                    answer = answer.trim()
                 }
                 let result = 0
                 switch (answer) {
